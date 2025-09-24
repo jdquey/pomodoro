@@ -321,6 +321,7 @@
                 this.initializeElements();
                 this.bindEvents();
                 this.updateDisplay();
+                this.updateButtonLabels();
             }
             
             initializeElements() {
@@ -442,6 +443,7 @@
             
             updateWorkTime() {
                 this.workTime = parseInt(this.workTimeInput.value) * 60;
+                this.updateButtonLabels();
                 if (this.isWorkSession && !this.isRunning) {
                     this.currentTime = this.workTime;
                     this.updateDisplay();
@@ -450,6 +452,7 @@
             
             updateBreakTime() {
                 this.breakTime = parseInt(this.breakTimeInput.value) * 60;
+                this.updateButtonLabels();
                 if (!this.isWorkSession && !this.isRunning && this.sessionCount % 4 !== 0) {
                     this.currentTime = this.breakTime;
                     this.updateDisplay();
@@ -492,6 +495,13 @@
                     this.workModeBtn.classList.remove('active');
                     this.restModeBtn.classList.add('active');
                 }
+            }
+            
+            updateButtonLabels() {
+                const workMinutes = this.workTime / 60;
+                const breakMinutes = this.breakTime / 60;
+                this.workModeBtn.textContent = `Work (${workMinutes} min)`;
+                this.restModeBtn.textContent = `Rest (${breakMinutes} min)`;
             }
             
             playNotificationSound() {
